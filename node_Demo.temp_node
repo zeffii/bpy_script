@@ -1,0 +1,51 @@
+#
+#
+#
+# we define functions after classes here, but you could
+# write them directly after the imports, like regular python
+
+filename node_Demo
+imports
+np
+mathutils*
+
+props int float str
+props bool enum vecf
+
+# 'svnode' expands to (Node, SverchCustomTreeNode)
+class svNodeDemo < svnode
+    idname node.BmeshViewerNode
+    label Bmesh Viewer Draw
+
+    int demo_range
+    float demo_ratio
+    str some_value
+    enum some_options
+/
+
+op NDop1
+    idname node.svDemoOpOne
+    label Bmesh Viewer Draw
+
+    int demo_range
+/
+
+op NDop2
+    idname node.svDemoOpTwo
+    label Bmesh Viewer Draw
+
+    str print_message
+    str print_message2    
+/
+
+defs: func1 func2
+fdef\
+func1 self _ var2 0 var3 [] 
+# def func1(self, var2=0, var3=[]): pass
+
+func2 var1 (20,30,10) var2 "some_str" 
+# def func2(var1=(20,30,10), var2="some_str"): pass
+
+r
+d
+
