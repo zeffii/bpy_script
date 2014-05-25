@@ -28,6 +28,10 @@ https://github.com/zeffii/bpy_script/issues/2
 
 import bpy
 
+# def has_selection(self_view, text):
+#     return not (text.select_end_line == text.current_line and
+#                 text.current_character == text.select_end_character)
+
 
 # class GistDownloadButton(bpy.types.Operator):
 #     """Defines a button"""
@@ -55,7 +59,15 @@ class MantisPropertiesPanel(bpy.types.Panel):
         row = layout.row()
         scn = bpy.context.scene
 
-        layout.label("rwarrrr")
+        text = bpy.context.edit_text
+        if text:
+            no_selection = (text.current_character == text.select_end_character)
+            tk = 'has select' if not no_selection else 'good, no selection'
+            layout.label(tk)
+            print("updated")
+        else:
+            layout.label('no active text')
+
         # display stringbox and download button
         #self.layout.prop(scn, "gist_id_property")
         #self.layout.operator("scene.download_gist", text='Download to .blend')
