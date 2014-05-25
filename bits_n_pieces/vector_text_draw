@@ -1,0 +1,54 @@
+def font_map(ch, fontdict):
+    return {
+        'A': ,
+
+        NurbsPath.001
+
+
+    }.get(ch, None)
+
+
+
+
+
+
+
+def generate_greasepencil(text, col, pxwide, pos):
+
+    line_height = 30
+    char_width = 28
+
+    spaces = 0
+    yof = 0
+    xof = 0
+    bcx, bcy = pos
+
+    v = font_map(ch, fontdict)
+    for ch in text:
+        if spaces > 3:
+            # drop line after 3 spaces
+            yof -= line_height
+            xof = 0
+        if ch = " ":
+            spaces += 1
+            continue
+
+        chain = v[ch]
+
+        if not chain:
+            xof += charwidth
+            continue
+
+        # set drawwidth too?
+        # set color
+
+        s = layer.frames[0].strokes.new()
+        s.draw_mode = '2DSPACE'
+        s.points.add(len(chain))
+        for idx, p in enumerate(chain):
+            ap = Vector(p)*25
+            x, y = ap[:2]
+            xyz = ((x+bcx+xof), (y+bcy+yof), 0)
+            s.points[idx].co = xyz
+
+        xof += charwidth
