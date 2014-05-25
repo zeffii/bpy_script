@@ -27,24 +27,54 @@ https://github.com/zeffii/bpy_script/issues/2
 '''
 
 import bpy
+import re
 
 # def has_selection(self_view, text):
 #     return not (text.select_end_line == text.current_line and
 #                 text.current_character == text.select_end_character)
 
+def find_bounds(idx, k):
+    ''' witness extreme lazyness '''
 
-# class GistDownloadButton(bpy.types.Operator):
-#     """Defines a button"""
-#     bl_idname = "scene.download_gist"
-#     bl_label = "Download given gist from id only"
+    pattern = '(=| |,|[a-zA-Z_])'
+    less = re.sub(pattern, ' ', k)
+    left = less[:idx].lstrip().split(' ')[-1]
+    right = less[idx:].rstrip().split(' ')[0]
+    summed = left + right
+    return summed or None
+
+
+class TextSelectionOperator(bpy.types.Operator):
+    """Defines a Text Op for testing"""
+    bl_idname = "text.text_sel_op"
+    bl_label = "bladibla"
  
-#     def execute(self, context):
-#         # could name this filename instead of gist_id for new .blend text.
-#         gist_id = context.scene.gist_id_property
-#         bpy.data.texts.new(gist_id)
-#         bpy.data.texts[gist_id].write(get_file(gist_id))
-#         return{'FINISHED'}
+    def execute(self, context):
+        # bpy.ops.text.select_word()
+        txt = context.edit_text        
+        idx = txt.current_character
+        k = txt.current_line.body
 
+        if not k:
+            print('end early')
+            return{'FINISHED'}
+
+        print(idx, dir(idx))
+
+        found = find_bounds(idx, k)
+        if found:
+            print(found)
+        return{'FINISHED'}
+
+# bpy.ops.text.line_number()
+# bpy.ops.text.cursor_set(x=0, y=0)
+# bpy.ops.text.select_line()
+# txt.current_line_index
+# bpy.ops.text.replace()
+# bpy.ops.text.run_script()
+# bpy.ops.text.select_word()  <- this fails to select float types
+# bpy.ops.text.selection_set(select=False)
+# bpy.ops.text.move(type='LINE_BEGIN')   ‘PREVIOUS_WORD’, ‘NEXT_WORD’, 
 
 class MantisPropertiesPanel(bpy.types.Panel):
     """Creates a Panel in the TextEditor properties window"""
@@ -70,12 +100,14 @@ class MantisPropertiesPanel(bpy.types.Panel):
 
         # display stringbox and download button
         #self.layout.prop(scn, "gist_id_property")
-        #self.layout.operator("scene.download_gist", text='Download to .blend')
+        self.layout.operator("text.text_sel_op", text='select word')
 
 
 def register():
+    bpy.utils.register_class(TextSelectionOperator)
     bpy.utils.register_class(MantisPropertiesPanel)
 
 
 def unregister():
     bpy.utils.unregister_class(MantisPropertiesPanel)
+    bpy.utils.unregister_class(TextSelectionOperator)
