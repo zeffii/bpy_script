@@ -49,8 +49,8 @@ __MACOSX
 #Ignore KDE's backup files
 *~ 
 #blend backups
-blend1
-blend2
-blend3
-blend4
+*.blend1
+*.blend2
+*.blend3
+*.blend4
 
