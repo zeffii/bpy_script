@@ -36,8 +36,10 @@ bl_info = {
 if "bpy" in locals():
     import imp
     imp.reload(mantis)
+    # imp.reload(SliderDraw)
 else:
     from . import mantis
+    # from . import SliderDraw
 
 import bpy
 
