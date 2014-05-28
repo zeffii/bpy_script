@@ -93,12 +93,28 @@ def draw_callback_px(n_id, settings):
     region_mid_width = region.width / 2.0
     region_mid_height = region.height / 2.0
 
-    rgb2 = (0.1, 0.4, 0.6, 0.4)
-    polyline = [(20, 20), (20, 40), (40, 40), (40, 20)]
+    rgb2 = (175/255, 228/255, 253/255, 0.4)
+    rgb3 = (241/255, 206/255, 123/255, 0.6)
 
     ''' draw polygon '''
-    x = 40
-    y = 70
+    x = 160
+    y = region.height - 70
+
+    polyline = [(0, 0), (200, 0), (200, -40), (0, -40)]
+    bgl.glColor4f(*rgb2)
+    bgl.glBegin(bgl.GL_POLYGON)
+    for pointx, pointy in polyline:
+        bgl.glVertex2f(pointx+x, pointy+y)
+    bgl.glEnd()
+
+    polyline = [(200, 0), (240, 0), (240, -40), (200, -40)]
+    bgl.glColor4f(*rgb3)
+    bgl.glBegin(bgl.GL_POLYGON)
+    for pointx, pointy in polyline:
+        bgl.glVertex2f(pointx+x, pointy+y)
+    bgl.glEnd()
+
+    polyline = [(240, 0), (400, 0), (400, -40), (240, -40)]
     bgl.glColor4f(*rgb2)
     bgl.glBegin(bgl.GL_POLYGON)
     for pointx, pointy in polyline:

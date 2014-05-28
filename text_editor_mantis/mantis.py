@@ -107,7 +107,6 @@ class MantisPropertiesPanel(bpy.types.Panel):
         row = layout.row()
         scn = bpy.context.scene
         st = context.space_data
-        print(dir(st))
 
         text = bpy.context.edit_text
         if text:
@@ -121,6 +120,11 @@ class MantisPropertiesPanel(bpy.types.Panel):
                 txt = context.edit_text
                 idx = txt.current_character
                 k = txt.current_line.body
+
+                if not k and idx:
+                    SD.callback_disable(n_id)
+                    return
+
                 line_idx = txt.current_line_index
 
                 value, n, e = find_bounds(idx, k)
