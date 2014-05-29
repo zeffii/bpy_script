@@ -2,6 +2,7 @@ import mathutils
 from mathutils import Vector
 import math
 
+# this file would be placed directly into the sverchokmaster directory when used.
 
 def get_length(verts):
     summed = 0
@@ -14,10 +15,10 @@ def get_length(verts):
     return summed, lengths
 
 
-def get_verts_n_edges(verts, lengths, seg_width, tlen):
+def get_verts_n_edges(verts, lengths, seg_width):
 
     K = seg_width
-    eps = 0.0001
+    eps = 0.00001
     new_points = []
     add_point = new_points.append
 
@@ -38,7 +39,8 @@ def get_verts_n_edges(verts, lengths, seg_width, tlen):
 
         # must divide segment, same idx
         elif (R < -eps):
-            rate = R / A
+            # rate = R / A
+            rate = K / A
             if not v1:
                 v1 = verts[idx]
             v2 = verts[idx+1]
@@ -52,6 +54,7 @@ def get_verts_n_edges(verts, lengths, seg_width, tlen):
             A = lengths[idx+1]
             consume(R, A, idx+1, None)
 
+    add_point(verts[0])
     consume(K, lengths[0], 0, None)
     add_point(verts[-1])
     return new_points
